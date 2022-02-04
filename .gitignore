@@ -75,3 +75,5 @@ x64/
 *.sln
 *.dir
 data/
+bin/
+lib/

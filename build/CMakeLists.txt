@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(Lab2)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
 if(MSVC)
@@ -17,6 +17,7 @@ else()
 endif()
 
 file(GLOB SOURCES ../src/*.c)
+file(MAKE_DIRECTORY ../data)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ../include)

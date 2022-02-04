@@ -10,49 +10,58 @@
  */
 #include "HeapSort.h"
 
-static Data* Heapify(Data* const array, const size_t size, const size_t i);
+/**
+ * \brief Recursively Creates a Max Heap from the Given Array
+ * 
+ * \param array: Array to heapify
+ * \param size: The Size of the Array
+ * \param i: The Point to Heap Around
+ * \return Data*: The Heaped Array Back
+ */
+static Data* MaxHeapify(Data* const array, const size_t size, const size_t i);
 
 /// Sorts Using Heap Sort
 Data* HeapSort(Data* const array, const size_t size) {
 
     Assert(array, "Invalid Array in Heap Sort");
 
-    if(size < 2) return array;
+    if(size < 2) // if the array is One or Zero Elements it is sorted
+        return array;
 
-    for(size_t i = size / 2 - 1; i >= 0; i--)
-        Heapify(array, size, i);
-
-
-    for(size_t i = size - 1; i > 0; i--) {
-
-        Swap(array, array + i);
-        Heapify(array, i, 0);
-
+    // Build A Max Heap with the Array
+    for (size_t i = size / 2 - 1; i != SIZE_MAX; i--)
+        MaxHeapify(array, size, i);
+ 
+    // Recurse, placing the Max on The End and then Reducing the Size
+    for (size_t i = size - 1; i != SIZE_MAX; i--) {
+        Swap(array, array + i); // move the high to the end
+        MaxHeapify(array, i, 0); // Heapify to the end
     }
 
     return array;
 
 }
 
-Data* Heapify(Data* const array, const size_t size, const size_t i) {
+Data* MaxHeapify(Data* const array, const size_t size, const size_t i) {
 
     Assert(array, "Invalid Array in Heapify");
 
-    size_t max = i;
-    size_t left = 2 * i + 1;
-    size_t right = 2 * i + 2;
-
-    if(left < size && array[left] > array[max])
-        max = left;
-
-    if(right < size && array[right] > array[max])
+    size_t max = i; // track the index where the parent should be
+    size_t left = 2 * i + 1; // the left leaf
+    size_t right = 2 * i + 2; // the right leaf
+  
+    // If the left is in the array and the value there is larger than that of max
+    if (left < size && array[left] > array[max])
+        max = left; // make the max index the left index
+  
+    // Same as Before but for right
+    if (right < size && array[right] > array[max])
         max = right;
-
-    if(max != i) {
-
-        Swap(array + i, array + max);
-        Heapify(array, size, max);
-
+  
+    // If we didn't pick the max value
+    if (max != i) {
+        Swap(&array[i], &array[max]); // make it the max value
+        MaxHeapify(array, size, max); // recurse to check again
     }
 
     return array;

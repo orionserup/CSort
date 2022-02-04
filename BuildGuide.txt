@@ -1,0 +1,9 @@
+You Need cmake to compile
+
+run 
+
+cd build
+cmake .
+cmake --build .
+
+Then go to the bin folder and run the program

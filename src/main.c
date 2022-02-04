@@ -47,7 +47,7 @@
 /// How Far Apart Two Trials should be
 #define STEP 1
 /// How Big of an array is needed to store this data
-#define SIZE (MAX - MIN) / STEP
+#define SIZE (MAX - MIN) / STEP + 1
 
 /**
  * \brief The Entry Point of the Program

@@ -34,9 +34,10 @@ void Swap(Data* const val1, Data* const val2) {
     Assert(val1, "Invalid First Value Pointer in Swap");
     Assert(val2, "Invalid Second Value Pointer in Swap");
 
-    if(val1 == val2) return; // if they are pointing to the same thing then don't do anything
+    if(val1 == val2) 
+        return; // if they are pointing to the same thing then don't do anything
 
-    int temp = *val1;
+    Data temp = *val1;
     *val1 = *val2;
     *val2 = temp;
 
