@@ -65,3 +65,13 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+
+*.ninja*
+*.cmake
+Debug/
+x64/
+*.filters
+*.vcxproj
+*.sln
+*.dir
+data/

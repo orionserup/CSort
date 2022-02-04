@@ -41,11 +41,11 @@
 #include "SortBenchmark.h"
 
 /// The Minimum Number of Elements to Test
-#define MIN 100
+#define MIN 1
 /// The Maximum Number of Elements to Test
-#define MAX 10000
+#define MAX 5
 /// How Far Apart Two Trials should be
-#define STEP 100
+#define STEP 1
 /// How Big of an array is needed to store this data
 #define SIZE (MAX - MIN) / STEP
 
@@ -56,14 +56,14 @@
  */
 int main() {
 
-    Sort sorts[] = { RADIX_SORT, MERGE_SORT, SELECTION_SORT };
+    Sort sorts[] = { HEAP_SORT };
     const size_t numsorts = sizeof(sorts)/sizeof(Sort);
 
     Data n[SIZE];
     for(Data i = 0; i < SIZE; i++)
         n[i] = MIN + STEP * i;
 
-    BenchmarkSorts(sorts, numsorts, n, SIZE, 10);
+    BenchmarkSorts(sorts, numsorts, n, SIZE, 1);
 
     return EXIT_SUCCESS;
 

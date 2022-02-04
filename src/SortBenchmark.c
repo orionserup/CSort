@@ -96,7 +96,7 @@ void BenchmarkSort(const Sort sort, const Data* const trials, const size_t numtr
             #ifdef LOG
             fputs("After ", log);
             fPrintArray(log, array, trials[i]);
-            fprintf(log, "%ld Elements in %lf Milliseconds\n", worsttimes[i + j * numtrials].n, worsttimes[i + j * numtrials].time_ms);
+            fprintf(log, "%zu Elements in %lf Milliseconds\n", worsttimes[i + j * numtrials].n, worsttimes[i + j * numtrials].time_ms);
             fprintf(log, "Sorted: %s\n\n", IsSorted(array, trials[i])? "True": "False");
             #endif
             
@@ -109,7 +109,7 @@ void BenchmarkSort(const Sort sort, const Data* const trials, const size_t numtr
             #ifdef LOG
             fputs("After ", log);
             fPrintArray(log, array, trials[i]);
-            fprintf(log, "%ld Elements in %lf Milliseconds\n", avetimes[i + j * numtrials].n, avetimes[i + j * numtrials].time_ms);
+            fprintf(log, "%zu Elements in %lf Milliseconds\n", avetimes[i + j * numtrials].n, avetimes[i + j * numtrials].time_ms);
             fprintf(log, "Sorted: %s\n\n", IsSorted(array, trials[i])? "True": "False");
             #endif
             
