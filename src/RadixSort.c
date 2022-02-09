@@ -22,6 +22,20 @@ elif (RADIX_POW < = 32)
 typedef uint32_t Digit;
 #endif
 
+// Hyper Optimize the Algorithm 
+// if the Power of the Radix is a Power of two we can optimize a multiplication into a shift
+#if (RADIX_POW == 2)
+#define RADIX_POW_POW 1
+#elif (RADIX_POW == 4) 
+#define RADIX_POW_POW 2
+#elif (PADIX_POW == 8) 
+#define RADIX_POW_POW 3
+#elif (RADIX_POW == 16)
+#define RADIX_POW_POW 4
+#elif (RADIX_POW == 32)
+#define RADIX_POW_POW 5 
+#endif
+
 /// Finds the Number of Counting Sort Iterations Needed to Sort the Number Max
 static inline size_t FindNumIterations(Data max);
 
@@ -115,9 +129,21 @@ size_t FindNumIterations(Data max) {
 
 }
 
+#ifndef RADIX_POW_POW
 /// Gets the "Digit" in the Nth Place, for A Base of RADIX
 inline Digit GetNthDigit(const Data data, const size_t n) {
 
     return (data >> (n * RADIX_POW)) & (RADIX - 1); // moves the data into a bit mask and gets the value
 
 }
+
+#else
+
+/// Gets the "Digit" in the Nth Place, for A Base of RADIX
+inline Digit GetNthDigit(const Data data, const size_t n) {
+
+    return (data >> (n << RADIX_POW_POW)) & (RADIX - 1); // moves the data into a bit mask and gets the value
+
+}
+
+#endif
