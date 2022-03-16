@@ -3,35 +3,70 @@ import csv
 import glob
 import sys
 
-def PlotCSVData(path, combined):
-    files = glob.glob(path + "*.csv")
-    readers = [ csv.reader(open(file)) for file in files ]
-    datem = [ [ row for row in reader ] for reader in readers]
-    xdata = [ [int(row[0]) for row in data] for data in datem ]
-    ydata = [ [float(row[1]) for row in data] for data in datem]
-    titles = [ file.replace(path, '').split('.csv')[0] for file in files]
+def GetSortData(file) -> dict[str, list]:
+    reader = csv.reader(open(file))
+    data = [ row for row in reader ]
     
-    plt.xlabel("Number Of Elements")
-    plt.ylabel("Time To Sort (ms)")
+    ndata = [ int(row[0]) for row in data]
+    timedata = [ float(row[1]) for row in data]
+    
+    return { 'n': ndata, 'time': timedata}
 
-    if(combined == True):
-        for i in range(len(xdata)):       
-            plt.plot(xdata[i], ydata[i], '-', linewidth = 2)
-            plt.title("Sort Timing")
-            plt.legend(titles)    
-            
-        plt.savefig(path + "Sorts.png", dpi = 1200)
+def PlotSortData(path, combined = False) -> None:
+    
+    # Get all .csv Files from the Path
+    files = glob.glob(path + "*.csv")
+    # Get The Name of the Sort eg QuickSort
+    sorts = set([ file.split("Sort")[0] for file in files ])
+    
+    if combined == True:
+        plt.title("Worst Case Times")
+        plt.xlabel("Number of Elements")
+        plt.ylabel("Time to Sort (ms)")
+        for sort in sorts:
+            worstdata = GetSortData(sort + "SortWorst.csv")
+            plt.plot(worstdata['n'], worstdata['time'])
+        plt.legend([sort.replace(path, "") + " Sort" for sort in sorts])
+        plt.savefig(path + "WorstCase.png", dpi = 600)
+        plt.close()
+
+        plt.title("Best Case Times")
+        plt.xlabel("Number of Elements")
+        plt.ylabel("Time to Sort (ms)")
+        for sort in sorts:
+            bestdata = GetSortData(sort + "SortBest.csv")
+            plt.plot(bestdata['n'], bestdata['time'])
+        plt.legend([sort.replace(path, "") + " Sort" for sort in sorts])
+        plt.savefig(path + "BestCase.png", dpi = 600)
+        plt.close()
+        
+        plt.title("Average Case Times")
+        plt.xlabel("Number of Elements")
+        plt.ylabel("Time to Sort (ms)")
+        for sort in sorts:
+            avgdata = GetSortData(sort + "SortAvg.csv")
+            plt.plot(avgdata['n'], avgdata['time'])
+        plt.legend([sort.replace(path, "") + " Sort"for sort in sorts])
+        plt.savefig(path + "AverageCase.png", dpi = 600)
         plt.close()
 
     else:
-        for i in range(len(xdata)):
-            plt.xlabel("Number Of Elements")
-            plt.ylabel("Time To Sort (ms)")
-            plt.plot(xdata[i], ydata[i], '.')
-            plt.title(titles[i])    
-            plt.savefig(path + titles[i] + ".png")
-            plt.close()
+        for sort in sorts:
+            plt.title(sort.replace(path, "") + " Sort")
+            plt.xlabel("Number of Elements")
+            plt.ylabel("Time to Sort (ms)") 
+            avgdata = GetSortData(sort + "SortAvg.csv")
+            bestdata = GetSortData(sort + "SortBest.csv")
+            worstdata = GetSortData(sort + "SortWorst.csv")
 
+            plt.plot(worstdata['n'], worstdata['time'], 'r.')
+            plt.plot(bestdata['n'], bestdata['time'], 'g.')
+            plt.plot(avgdata['n'], avgdata['time'], 'b.')
+
+            plt.legend(["Worst Case", "Best Case", "Average Case"])
+
+            plt.savefig(sort + "Sort.png", dpi = 300)
+            plt.close()
 
 if __name__ == "__main__":
 
@@ -46,5 +81,5 @@ if __name__ == "__main__":
         elif "-h" in arg or "--help" in arg:
             print("Usage: python plotdata.py [--combined] [--path=<path to data>]")
             exit()
-
-    PlotCSVData(path, combined)
+    
+    PlotSortData(path, combined)

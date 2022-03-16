@@ -69,7 +69,6 @@ _deps
 
 
 *.ninja*
-*.cmake
 Debug/
 x64/
 *.filters
@@ -79,3 +78,7 @@ x64/
 data/
 bin/
 lib/
+html/
+latex/
+*.docs
+*.in

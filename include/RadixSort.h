@@ -15,7 +15,7 @@
 
 /// The Radix is this power of 2, so for ex 8 -> 256
 #ifndef RADIX_POW
-#define RADIX_POW 7
+#define RADIX_POW 8
 #endif
 
 /**
@@ -23,7 +23,7 @@
  * \note   The Radix Can Be Adjusted By Changing the RADIX_POW Macro, the radix Will be two to that power
  * \param  array: Array to sort
  * \param  size: Size of the array
- * \return int*: The Array Back at the end
+ * \return Data*: The Array Back at the end
  */
 Data* RadixSort(Data* const array, const size_t size);
 

@@ -169,7 +169,7 @@ SortData TimeSort(Data* (*const Sort)(Data* const array, const size_t size), Dat
 
     // If the Array is Sorted then return the real data otherwise return that the time was the maximum possible to indicate failure
     return IsSorted(array, size) ? 
-        (SortData){ .time_ms = (double)(end - begin)*1000.0f/CLOCKS_PER_SEC, .n = size } :
+        (SortData){ .time_ms = (end - begin)*1000.0/CLOCKS_PER_SEC, .n = size } :
         (SortData){ .time_ms = DBL_MAX, .n = size };
 
 }
@@ -181,7 +181,7 @@ void WriteSortDataToFile(FILE* const file, const SortData* const times, const si
     Assert(times, "Bad Times Array in Write Sort Data to File");
 
     for(size_t i = 0; i < size; i++)  // For Every Data Point Follow CSV rules
-        fprintf(file, "%zu,%lf\n", times[i].n, times[i].time_ms);
+        fprintf(file, "%zu, %lf\n", times[i].n, times[i].time_ms);
 
 }
 
